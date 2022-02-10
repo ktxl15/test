@@ -1,33 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .content{
-            height: 300px;
-            width: 300px;
-            background-color: rebeccapurplee;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <ul class="ul">
-            <li class="li">1</li>
-            <li class="li">2</li>
-            <li class="li">3</li>
-            <li class="li">4</li>
-        </ul>
-        <ul class="ul">
-            <li class="li">1</li>
-            <li class="li">2</li>
-            <li class="li">3</li>
-            <li class="li">4</li>
-        </ul>
-    </div>
-</body>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				display: flex;
+			}
+			.box{
+				margin: 90px;
+				height: 800px;
+				width: 800px;
+				background: url(./2c2727efe2244c87ab138f5614b34d95.jpeg) no-repeat;
+				background-size: 100% 100%;
+				position: relative;
+			}
+			.mask{
+				height: 200px;
+				width: 200px;
+				background-color: purple;
+				position: absolute;
+				opacity: .5;
+				top: 0;
+				display: none;
+				cursor: move;
+			}
+			.box-big{
+				height: 800px;
+				width: 800px;
+				border: 2px solid purple;
+				margin-left: 100px;
+				display: none;
+				position: relative;
+				overflow: hidden;
+			}
+			.box-big img{
+				height: 1200px;
+				width: 1200px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="mask"></div>
+		</div>
+		<div class="box-big">
+			<img src="./2c2727efe2244c87ab138f5614b34d95.jpeg" class="img">
+		</div>
+	</body>
+		<script type="text/javascript">
+			var box = document.querySelector('.box')
+			var mask = document.querySelector('.mask')
+			var big = document.querySelector('.box-big')
+			box.addEventListener('mouseenter',function() {
+				mask.style.display = "block"
+				big.style.display = "block"
+			})
+			box.addEventListener('mouseleave',function() {
+				big.style.display = "none"
+				mask.style.display = "none"
+			})
+			box.addEventListener('mousemove',function(e){
+				var x = e.pageX - this.offsetLeft
+				var y = e.pageY - this.offsetTop
+				var maskXM = box.offsetWidth-mask.offsetWidth
+				var maskYM = box.offsetHeight-mask.offsetHeight
+				console.log(x,y)
+				var maskX = x - mask.offsetWidth / 2
+				var maskY = y - mask.offsetHeight / 2
+				if(maskX <= 0){
+					maskX = 0
+				}else if(maskX >= maskXM){
+					maskX = maskXM
+				}
+				if(maskY <= 0){
+					maskY = 0
+				}else if(maskY >= maskYM){
+					maskY = maskYM
+				}
+				mask.style.left = maskX+'px'
+				mask.style.top = maskY+'px'
+				var bigimg =document.querySelector('.img')
+				var bigXmax = big.offsetWidth -bigimg.offsetWidth
+				var bigYmax = big.offsetHeight -bigimg.offsetHeight
+				var bigX = maskX * bigXmax /maskXM 
+				var bigY = maskY * bigYmax /maskYM 
+				bigimg.style.left = bigX+'px'
+				bigimg.style.top = bigY+'px'
+			})
+			
+			
+		</script>
 </html>
